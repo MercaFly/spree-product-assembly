@@ -4,3 +4,5 @@ coverage
 .ruby-gemset
 .ruby-version
 .idea
+gemfiles/*.gemfile.lock
+*.gem
