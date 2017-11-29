@@ -31,6 +31,18 @@ Spree::Product.class_eval do
     errors.add(:can_be_part, Spree.t(:assembly_cannot_be_part)) if can_be_part?
   end
 
+  def total_on_hand
+    if assembly?
+      variants_including_master.map(&:total_on_hand).sum
+    else
+      if any_variants_not_track_inventory?
+        Float::INFINITY
+      else
+        stock_items.sum(:count_on_hand)
+      end
+    end
+  end
+
   private
   def assemblies_part(variant)
     Spree::AssembliesPart.get(self.id, variant.id)
