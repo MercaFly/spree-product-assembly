@@ -10,6 +10,16 @@ module Spree
 
     after_create :set_master_unlimited_stock
 
+    validate :assembly_can_not_be_part
+
+    def assembly_can_not_be_part
+      if part.assembly?
+        errors.add(:base, "Assembly can't be part!")
+      elsif assembly.part?
+        errors.add(:base, "Part can't be assembly!")
+      end
+    end
+
     def self.get(assembly_id, part_id)
       find_or_initialize_by(assembly_id: assembly_id, part_id: part_id)
     end
