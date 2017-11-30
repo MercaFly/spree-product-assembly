@@ -1,7 +1,7 @@
 Spree::Product.class_eval do
-  has_many :parts, through: :assemblies_parts
   has_many :assemblies_parts, through: :variants_including_master,
            source: :parts_variants
+  has_many :parts, through: :assemblies_parts
 
   scope :individual_saled, -> { where(individual_sale: true) }
 
@@ -29,6 +29,18 @@ Spree::Product.class_eval do
 
   def assembly_cannot_be_part
     errors.add(:can_be_part, Spree.t(:assembly_cannot_be_part)) if can_be_part?
+  end
+
+  def total_on_hand
+    if assembly?
+      variants_including_master.map(&:total_on_hand).sum
+    else
+      if any_variants_not_track_inventory?
+        Float::INFINITY
+      else
+        stock_items.sum(:count_on_hand)
+      end
+    end
   end
 
   private

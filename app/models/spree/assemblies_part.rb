@@ -6,7 +6,7 @@ module Spree
 
     belongs_to :part, class_name: "Spree::Variant", foreign_key: "part_id"
 
-    delegate :name, :sku, to: :part
+    delegate :name, :sku, :total_on_hand, to: :part
 
     after_create :set_master_unlimited_stock
 

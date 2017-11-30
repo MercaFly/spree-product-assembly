@@ -5,21 +5,53 @@
 <%= render :partial => 'spree/admin/shared/sub_menu/product' %>
 
 <%= render :partial => 'spree/admin/shared/product_tabs', :locals => {:current => "Parts"} %>
-<div id="product_parts" data-product-slug="<%= product.slug %>">
-  <%= render :partial => "parts_table", :locals => {:parts => @parts} %>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h1 class="panel-title"><%= Spree.t(:stock) %></h1>
+  </div>
+  <table class="table table-bordered" id="parts_stock" data-hook="">
+    <tbody class="additional-info">
+      <tr>
+        <td id="total_on_hand" width="35%" data-hook="">
+          Total on hand (Refresh to update):
+        </td>
+        <td>
+          <%= product.total_on_hand %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
-<%= form_tag('#') do %>
-  <label><%= Spree.t(:search) %>:</label>
-  <div class="input-group">
-    <input id="searchtext" size="25" class="form-control">
-    <span class="input-group-btn">
-      <button id="search_parts_button" class="fa fa-search btn btn-search" name="button">
-        Search
-      </button>
-    </span>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h1 class="panel-title"><%= Spree.t(:parts) %></h1>
   </div>
-<% end %>
+  <div class="panel-body">
+    <div id="product_parts" data-product-slug="<%= product.slug %>">
+      <%= render :partial => "parts_table", :locals => {:parts => @parts} %>
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h1 class="panel-title"><%= Spree.t(:search) %></h1>
+  </div>
+  <%= form_tag('#') do %>
+    <div class="panel-body">
+      <div class="input-group">
+        <input id="searchtext" size="25" class="form-control">
+        <span class="input-group-btn">
+          <button id="search_parts_button" class="btn btn-primary" name="button">
+            Search
+          </button>
+        </span>
+      </div>
+    </div>
+  <% end %>
+</div>
+  
 
 <br/>
 <div id="search_hits"></div>
