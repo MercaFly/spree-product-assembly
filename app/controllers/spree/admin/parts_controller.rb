@@ -39,8 +39,7 @@ class Spree::Admin::PartsController < Spree::Admin::BaseController
       if form.submit
         render 'spree/admin/parts/update_parts_table'
       else
-        error_message = form.errors.full_messages.to_sentence
-        render json: error_message.to_json, status: 422
+        render json: form.error_message.to_json, status: 422
       end
     end
 

@@ -5,6 +5,10 @@ Spree::Variant.class_eval do
   has_many :assemblies, through: :assemblies_variants, class_name: "Spree::Variant", dependent: :destroy
   has_many :parts, through: :parts_variants, class_name: "Spree::Variant", dependent: :destroy
 
+  def assembly?
+    parts_variants.exists?
+  end
+
   def assemblies_for(products)
     assemblies.where(id: products)
   end

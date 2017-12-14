@@ -10,7 +10,7 @@ module Spree
     #
     # TODO Can possibly be removed as well. We already override the manifest
     # partial so we can get the product there
-    ManifestItem = Struct.new(:part, :product, :line_item, :variant, :quantity, :states)
+    ManifestItem ||= Struct.new(:part, :product, :line_item, :variant, :quantity, :states)
 
     def manifest
       inventory_units.group_by(&:variant_id).map do |variant, inventory_units|

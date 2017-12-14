@@ -13,8 +13,16 @@ module Spree
 
     def submit
       if valid?
-        assemblies_part.update_attributes(attributes)
+        assemblies_part.update(attributes)
       end
+    end
+
+    def error_message
+      assemblies_part.errors.full_messages.each do |msg|
+        # you can customize the error message here:
+        errors[:base] << msg
+      end
+      errors.full_messages.to_sentence
     end
 
     private
