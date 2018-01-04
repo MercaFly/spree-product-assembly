@@ -56,7 +56,7 @@
 <tr class="show-tracking total">
   <td colspan="5">
     <% if shipment.tracking.present? %>
-      <strong><%= Spree.t(:tracking) %>:</strong> <%= shipment.tracking %>
+      <strong><%= Spree.t(:tracking) %>:</strong> <%= link_to_tracking(shipment, target: '_blank') %>
     <% else %>
       <%= Spree.t(:no_tracking_present) %>
     <% end %>
