@@ -15,7 +15,12 @@
       <% end %>
     </td>
 
-    <td class="item-price text-center"><%= item.part ? item.variant.display_price.to_html : item.line_item.single_money.to_html %></td>
+    <% if item.part %>
+      <td class="item-price text-center"><%=  item.variant.display_price.to_html %></td>
+    <% elsif item.line_item  %>
+      <td class="item-price text-center"><%= item.line_item.single_money.to_html %></td>
+    <% end %>
+    <!--<td class="item-price text-center"><%= item.part ? item.variant.display_price.to_html : item.line_item.single_money.to_html %></td>-->
 
     <td class="item-qty-show text-center">
       <% item.states.each do |state,count| %>
