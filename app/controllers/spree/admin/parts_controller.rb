@@ -20,7 +20,7 @@ class Spree::Admin::PartsController < Spree::Admin::BaseController
       @available_products = []
     else
       query = "%#{params[:q]}%"
-      @available_products = Spree::Product.search_can_be_part(query).uniq
+      @available_products = Spree::Product.by_store(current_store).search_can_be_part(query).uniq
     end
     respond_to do |format|
       format.html {render :layout => false}
@@ -44,7 +44,7 @@ class Spree::Admin::PartsController < Spree::Admin::BaseController
     end
 
     def product
-      @product ||= Spree::Product.find_by(slug: params[:product_id])
+      @product ||= Spree::Product.by_store(current_store).find_by(slug: params[:product_id])
     end
 
     def new_part_params
